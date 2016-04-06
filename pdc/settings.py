@@ -31,6 +31,10 @@ SECRET_KEY = '3hm)=^*sowhxr%m)%_u3mk+!ncy=c)147xbevej%l_lcdogu#+'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
+# When converting data from ET to PDC, need to disable eus/aus repo checks in Repo model.
+# If true, disable the checks; else others. The default value is False.
+ET_TO_PDC_REPO_FLAGE = False
+
 ALLOWED_HOSTS = []
 
 ITEMS_PER_PAGE = 50

@@ -33,8 +33,31 @@ class UnreleasedVariant(models.Model): # Not the variant from compose ... which 
             'variant_type': self.variant_type,
             'variant_version': self.variant_version,
             'variant_release': self.variant_release,
-            'koji_tag': self.koji_tag
+            'koji_tag': self.koji_tag,
+            'runtime_deps': [ v.dependency for v in self.runtime_deps ],
+            'build_deps': [ v.dependency for v in self.build_deps ],
         }
+
+
+class VariantDependency(models.Model):
+
+    dependency = models.CharField(max_length=300)
+
+    class Meta:
+        abstract = True
+
+
+class RuntimeDependency(VariantDependency):
+
+    variant = models.ForeignKey("UnreleasedVariant",
+                                related_name="runtime_deps")
+
+
+class BuildDependency(VariantDependency):
+
+    variant = models.ForeignKey("UnreleasedVariant",
+                                related_name="build_deps")
+
 
 class Tree(models.Model):
     tree_id             = models.CharField(max_length=200, unique=True)
